@@ -1,0 +1,70 @@
+@startuml MusicDB_ERD
+
+title Music Database Schema
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+' === Таблицы ===
+
+entity "Genres" as G {
+  * genres_id : INT <<PK>>
+  --
+  * genres_name : VARCHAR(255)
+}
+
+entity "Author" as A {
+  * author_id : INT <<PK>>
+  --
+  * author_name : VARCHAR(255)
+}
+
+entity "Author_Genres" as AG {
+  * author_id : INT <<PK, FK>>
+  * genres_id : INT <<PK, FK>>
+}
+
+entity "Album" as AL {
+  * album_id : INT <<PK>>
+  --
+  * album_name : VARCHAR(255)
+  * album_release : INT
+}
+
+entity "Author_Album" as AA {
+  * author_id : INT <<PK, FK>>
+  * album_id : INT <<PK, FK>>
+}
+
+entity "Track" as T {
+  * track_id : INT <<PK>>
+  --
+  * track_name : VARCHAR(255)
+  * track_duration : INT
+  * album_id : INT <<FK>>
+}
+
+entity "Collection" as C {
+  * collection_id : INT <<PK>>
+  --
+  * collection_name : VARCHAR(255)
+  * collection_release : INT
+}
+
+entity "Collection_Track" as CT {
+  * collection_id : INT <<PK, FK>>
+  * track_id : INT <<PK, FK>>
+}
+
+' === Связи (без подписей) ===
+A ||..|{ AG
+G ||..|{ AG
+
+A ||..|{ AA
+AL ||..|{ AA
+
+AL ||--o{ T
+
+C ||..|{ CT
+T ||..|{ CT
+
+@enduml
