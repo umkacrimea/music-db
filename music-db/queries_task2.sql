@@ -22,4 +22,4 @@ WHERE author_name !~ '\s';
 -- 5. Треки, содержащие «мой» или «my» (регистронезависимо)
 SELECT track_name 
 FROM Track 
-WHERE track_name ILIKE '%my%';
+WHERE track_name ~* '\m(my|мой)\M';
